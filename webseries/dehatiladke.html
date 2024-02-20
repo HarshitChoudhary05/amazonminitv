@@ -1,1 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dehate Ladke Episodes</title>
+  <style>
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
 
+    .tabs {
+      margin-bottom: 20px;
+      display: flex;
+    }
+
+    .tab {
+      background-color: transparent;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      margin-right: 10px;
+      position: relative;
+      font-size: 16px;
+    }
+
+    .tab:hover {
+      background-color: #f0f0f0;
+    }
+
+    .tab.active:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: blue;
+    }
+
+    .episodes {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .episode {
+      margin: 10px;
+      cursor: pointer;
+      padding: 10px;
+      border-radius: 10px;
+      background-color: #f0f0f0;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .episode:hover {
+      transform: translateY(-5px);
+    }
+
+    .episode img {
+      max-width: 100%;
+      border-radius: 10px;
+    }
+
+    .episode-title {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="tabs" id="seasonTabs">
+    </div>
+    <div class="episodes" id="episodes">
+    </div>
+  </div>
+
+  <script>
+    function handleEpisodeClick(url) {
+      sessionStorage.setItem('videoUrl', url);
+      window.location.href = '../player.html';
+    }
+
+    function loadEpisodes(seasonData) {
+      const episodesContainer = document.getElementById('episodes');
+      episodesContainer.innerHTML = '';
+
+      for (const key in seasonData) {
+        if (seasonData.hasOwnProperty(key)) {
+          const episode = seasonData[key];
+          const episodeDiv = document.createElement('div');
+          episodeDiv.classList.add('episode');
+          episodeDiv.onclick = function() {
+            handleEpisodeClick(episode.url);
+          };
+
+          const img = document.createElement('img');
+          img.src = episode.cover;
+
+          const title = document.createElement('div');
+          title.classList.add('episode-title');
+          title.textContent = episode.name;
+
+          episodeDiv.appendChild(img);
+          episodeDiv.appendChild(title);
+          episodesContainer.appendChild(episodeDiv);
+        }
+      }
+    }
+
+    function showSeason(season) {
+      const xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          const hustlersData = JSON.parse(this.responseText);
+          const seasonData = hustlersData.hustlers[season];
+          loadEpisodes(seasonData);
+        }
+      };
+      xhttp.open("GET", "https://minitvapi.vercel.app/hustlers.json", true);
+      xhttp.send();
+    }
+
+    function createTabs(seasons) {
+      const seasonTabs = document.getElementById('seasonTabs');
+      seasons.forEach((season, index) => {
+        const button = document.createElement('button');
+        button.textContent = season;
+        button.classList.add('tab');
+        if (index === 0) {
+          button.classList.add('active');
+        }
+        button.onclick = function() {
+          const activeTab = document.querySelector('.tab.active');
+          if (activeTab) {
+            activeTab.classList.remove('active');
+          }
+          button.classList.add('active');
+          showSeason(season);
+        }
+        seasonTabs.appendChild(button);
+      });
+    }
+
+    // Fetch the data and create tabs
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        const hustlersData = JSON.parse(this.responseText);
+        const seasons = Object.keys(hustlersData.hustlers);
+        createTabs(seasons);
+        showSeason(seasons[0]); // Show the first season by default
+      }
+    };
+    xhttp.open("GET", "https://minitvapi.vercel.app/dehatiladke.json", true);
+    xhttp.send();
+</script>
+
+</body>
+</html>
