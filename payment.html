@@ -5,41 +5,113 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Send Money via GPay</title>
     <style>
+        /* General Styles */
         body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #1fa2ff, #12d8fa, #a6ffcb);
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            height: 100vh;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
+            color: white;
+            overflow: hidden;
         }
-        .gpay-btn {
-            background-color: #34a853;
+
+        /* Container */
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 50px;
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        /* Title */
+        .title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        /* Payment Details */
+        .details {
+            font-size: 18px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        /* Pay Button */
+        .pay-btn {
+            background: linear-gradient(90deg, #34d399, #3b82f6);
             color: white;
             border: none;
-            padding: 15px 30px;
-            font-size: 18px;
+            padding: 15px 50px;
+            font-size: 20px;
             font-weight: bold;
-            border-radius: 8px;
+            text-transform: uppercase;
+            border-radius: 30px;
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
         }
-        .gpay-btn:hover {
-            background-color: #2a8f46;
+
+        .pay-btn:hover {
+            transform: translateY(-5px);
+            background: linear-gradient(90deg, #10b981, #2563eb);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
         }
-        .gpay-btn:active {
+
+        .pay-btn:active {
             transform: scale(0.95);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 30px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
     </style>
 </head>
 <body>
-    <button class="gpay-btn" onclick="sendMoney()">Pay ₹400 via GPay</button>
+    <div class="container">
+        <div class="title">Complete Your Payment</div>
+        <div class="details">
+            Pay ₹400 to:<br>
+            <strong id="payeeName">NPTEL Certificate</strong><br>
+            UPI ID: <span style="color: #34d399;" id="upiId">harshit.innet-1@oksbi</span>
+        </div>
+        <button class="pay-btn" onclick="sendMoney()">Pay Now</button>
+        <div class="footer">Secured by UPI Payments</div>
+    </div>
 
     <script>
+        const payeeName = "For NPTEL Certificate";
+        const upiId = "harshit.innet-1@oksbi";
+        const amount = 1;
+
+        // Display Payee Name and UPI ID dynamically
+        document.getElementById("payeeName").textContent = payeeName;
+        document.getElementById("upiId").textContent = upiId;
+
         function sendMoney() {
-            const upiUrl = "upi://pay?pa=harshit.innet-1@oksbi&pn=For Nptel Certificate &am=1&cu=INR";
+            const upiUrl = `upi://pay?pa=${upiId}&pn=${payeeName}&am=${amount}&cu=INR`;
             window.location.href = upiUrl;
         }
     </script>
