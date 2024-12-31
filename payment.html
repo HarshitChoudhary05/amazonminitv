@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Money via GPay</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1fa2ff, #12d8fa, #a6ffcb);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .gpay-btn {
+            background-color: #34a853;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .gpay-btn:hover {
+            background-color: #2a8f46;
+        }
+        .gpay-btn:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body>
+    <button class="gpay-btn" onclick="sendMoney()">Pay ₹400 via GPay</button>
+
+    <script>
+        function sendMoney() {
+            const upiUrl = "upi://pay?pa=harshit.innet-1@oksbi&pn=Harshit&am=400&cu=INR";
+            window.location.href = upiUrl;
+        }
+    </script>
+</body>
+</html>
