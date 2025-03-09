@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Crushed Episodes</title>
+  <title>aashram Episodes</title>
   <style>
     .container {
       max-width: 800px;
@@ -116,7 +116,7 @@
       xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
           const crushedData = JSON.parse(this.responseText);
-          const seasonData = crushedData.crushed[season];
+          const seasonData = aashramData.aashram[season];
           loadEpisodes(seasonData);
         }
       };
@@ -150,7 +150,7 @@
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
         const crushedData = JSON.parse(this.responseText);
-        const seasons = Object.keys(crushedData.crushed);
+        const seasons = Object.keys(aashramData.aashram);
         createTabs(seasons);
         showSeason(seasons[0]); // Show the first season by default
       }
