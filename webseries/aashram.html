@@ -115,7 +115,7 @@
       const xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-          const crushedData = JSON.parse(this.responseText);
+          const hustlersData = JSON.parse(this.responseText);
           const seasonData = aashramData.aashram[season];
           loadEpisodes(seasonData);
         }
@@ -149,7 +149,7 @@
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-        const crushedData = JSON.parse(this.responseText);
+        const hustlersData = JSON.parse(this.responseText);
         const seasons = Object.keys(aashramData.aashram);
         createTabs(seasons);
         showSeason(seasons[0]); // Show the first season by default
