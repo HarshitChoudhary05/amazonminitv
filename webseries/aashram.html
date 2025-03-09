@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>aashram Episodes</title>
+  <title>Crushed Episodes</title>
   <style>
     .container {
       max-width: 800px;
@@ -115,12 +115,12 @@
       const xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-          const hustlersData = JSON.parse(this.responseText);
-          const seasonData = aashramData.aashram[season];
+          const crushedData = JSON.parse(this.responseText);
+          const seasonData = crushedData.crushed[season];
           loadEpisodes(seasonData);
         }
       };
-      xhttp.open("GET", "https://minitvapi.vercel.app/aashram.json", true);
+      xhttp.open("GET", "https://minitvapi.vercel.app/crushed.json", true);
       xhttp.send();
     }
 
@@ -149,13 +149,13 @@
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-        const hustlersData = JSON.parse(this.responseText);
-        const seasons = Object.keys(aashramData.aashram);
+        const crushedData = JSON.parse(this.responseText);
+        const seasons = Object.keys(crushedData.crushed);
         createTabs(seasons);
         showSeason(seasons[0]); // Show the first season by default
       }
     };
-    xhttp.open("GET", "https://minitvapi.vercel.app/aashram.json", true);
+    xhttp.open("GET", "https://minitvapi.vercel.app/crushed.json", true);
     xhttp.send();
 </script>
 
